@@ -1,12 +1,12 @@
 global:
-  domain: ${{ values.domain }}
+  domain: test.vkpr.net
   secure: true
   provider: aws
-kong: 
+kong:
   enabled: true
-  basic_auth: ${{ values.basic_auth }}
-  mode: ${{ values.kong_mode }}
-  enterprise:
-    license: /home/tec/Projects/VKPR/vkpr-cli/license
-  rbac:
-    adminPassword: teste12
+  basic_auth: true
+  mode: standard
+  # enterprise:
+  #   license: /home/tec/Projects/VKPR/vkpr-cli/license
+  # rbac:
+  #   adminPassword: teste12
