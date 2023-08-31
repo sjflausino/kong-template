@@ -30,7 +30,9 @@ jobs:
             vkpr credential set --provider="aws" \
                 --fields="accesskeyid,region,secretaccesskey" \
                 --values="${{ secrets.AWS_ACCESS_KEY }},${{ secrets.AWS_REGION }},${{ secrets.AWS_SECRET_KEY }}" 
-
+            vkpr credential set --provider="postgres" \
+                --fields="password,service" \
+                --values="${{ secrets.POSTGRES_PASSWORD}},postgres" 
       - name: Kong License
         run: |
           KONG_LICENSE=${{ secrets.KONG_LICENSE }}
