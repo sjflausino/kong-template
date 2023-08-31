@@ -1,10 +1,10 @@
-name: Kong Stack
+name: Kong Stack 
 
 on:
   workflow_dispatch:
 
 jobs:
-  Install_Ingress_Stack:
+  kong_stack:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -33,9 +33,12 @@ jobs:
 
       - name: Kong License
         run: |
-          touch license 
-          echo "${{ secrets.KONG_LICENSE }}" > license
-          yq -i ".kong.enterprise.license = \"$PWD/license\"" $PWD/vkpr.yaml
+          KONG_LICENSE=${{ secrets.KONG_LICENSE }}
+          if [ -z "$KONG_LICENSE" ]; then
+            touch license 
+            echo "$KONG_LICENSE" > license
+            yq -i ".kong.enterprise.license = \"$PWD/license\"" $PWD/vkpr.yaml
+          fi
 
       ### Provisionamento (External DNS, Cert-Manager, Nginx Ingress Controller)
       - name: Vkpr apply

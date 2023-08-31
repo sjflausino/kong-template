@@ -1,11 +1,11 @@
 global:
-  domain: test.vkpr.net
+  domain: test.vkpr.net #
   secure: true
   provider: aws
 kong:
   enabled: true
-  basic_auth: true
-  mode: standard
+  basic_auth: true #
+  mode: standard #
   # enterprise:
   #   license: /home/tec/Projects/VKPR/vkpr-cli/license
   # rbac:
