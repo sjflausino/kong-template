@@ -33,16 +33,20 @@ jobs:
             vkpr credential set --provider="postgres" \
                 --fields="password,service" \
                 --values="${{ secrets.POSTGRES_PASSWORD}},postgres" 
-      - name: Kong License
-        run: |
-          KONG_LICENSE=${{ secrets.KONG_LICENSE }}
-          if [ -z "$KONG_LICENSE" ]; then
-            touch license 
-            echo "$KONG_LICENSE" > license
-            yq -i ".kong.enterprise.license = \"$PWD/license\"" $PWD/vkpr.yaml
-          fi
 
-      ### Provisionamento (External DNS, Cert-Manager, Nginx Ingress Controller)
+      - name: Kong License and Admin Password
+        run: |   
+            KONG_ADMIN_PASSWORD=${{ secrets.KONG_ADMIN_PASSWORD }}
+            if [ -n "$KONG_ADMIN_PASSWORD" ]; then
+                yq -i ".kong.rbac.adminPassword = \"$KONG_ADMIN_PASSWORD\"" $PWD/vkpr.yaml
+            fi
+            KONG_LICENSE=${{ secrets.KONG_LICENSE }}
+            if [ -n "$KONG_LICENSE" ]; then
+                touch license 
+                echo "$KONG_LICENSE" > license
+                yq -i ".kong.enterprise.license = \"$PWD/license\"" $PWD/vkpr.yaml
+            fi
+
       - name: Vkpr apply
         run: |
           shopt -s expand_aliases
