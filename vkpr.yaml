@@ -1,5 +1,5 @@
 global:
-  domain: test.vkpr.net #
+  domain: apps.vkpr.net #
   secure: true
   provider: aws
 kong:
